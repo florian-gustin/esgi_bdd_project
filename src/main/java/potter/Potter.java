@@ -5,28 +5,56 @@ import java.util.*;
 public final class Potter {
     static public int BOOK_PRICE = 8;
 
-    static public Map<Integer, Float> discounts = new HashMap<>();
+    static public Map<Integer, Float> DISCOUNTS = new HashMap<>();
 
     static {
-        discounts.put(5, 0.25f);
-        discounts.put(4, 0.2f);
-        discounts.put(3, 0.15f);
-        discounts.put(2, 0.05f);
-        discounts.put(1, 0f);
-        discounts.put(0, 0f);
+        DISCOUNTS.put(5, 0.25f);
+        DISCOUNTS.put(4, 0.2f);
+        DISCOUNTS.put(3, 0.15f);
+        DISCOUNTS.put(2, 0.05f);
+        DISCOUNTS.put(1, 0f);
+        DISCOUNTS.put(0, 0f);
     }
 
-    static public float price(List<Integer> books) {
+    public static float price(List<Integer> books) {
+        List<Integer> bookList = books;
+        List<Set<Integer>> setsOfDifferentBooks = extractAllSetsOfDifferentBooks(bookList);
 
-        float total = 0f;
-        while (books.size() != 0) {
-            Set<Integer> uniqueBooks = new HashSet<>(books);
+        float totalPrice = 0f;
+        for (Set<Integer> aSetOfDifferentBooks : setsOfDifferentBooks) {
+            totalPrice += getPriceForASetOfDifferentBook(aSetOfDifferentBooks.size());
+        }
+        return totalPrice;
+    }
 
-            total += BOOK_PRICE * uniqueBooks.size() * (1 - discounts.get(uniqueBooks.size()));
+    private static double getPriceForASetOfDifferentBook(final Integer differentBookCount) {
+        double discount = DISCOUNTS.get(differentBookCount);
+        double totalPriceWithoutDiscount = differentBookCount * BOOK_PRICE;
+        return totalPriceWithoutDiscount - (totalPriceWithoutDiscount * discount);
+    }
 
-            uniqueBooks.forEach(item -> books.remove(books.indexOf(item)));
+    private static List<Set<Integer>> extractAllSetsOfDifferentBooks(List<Integer> allBooks) {
+        List<Integer> remainingBooks = new ArrayList<>(allBooks);
+        List<Set<Integer>> setsOfDifferentBooks = new ArrayList<>(10);
+
+        while (remainingBooks.size() > 0) {
+            final Set<Integer> oneSetOfDifferentBooks = extractNextSetOfDifferentBook(remainingBooks);
+            setsOfDifferentBooks.add(oneSetOfDifferentBooks);
+            removeCountedBooks(oneSetOfDifferentBooks, remainingBooks);
         }
 
-        return total;
+        return setsOfDifferentBooks;
+    }
+
+    private static Set<Integer> extractNextSetOfDifferentBook(List<Integer> books) {
+        Set<Integer> differentBooks = new HashSet<>(5);
+        differentBooks.addAll(books);
+        return differentBooks;
+    }
+
+    private static void removeCountedBooks(final Set<Integer> countedBooks, final List<Integer> remainingBooks) {
+        for (Integer countedBook : countedBooks) {
+            remainingBooks.remove(countedBook);
+        }
     }
 }
