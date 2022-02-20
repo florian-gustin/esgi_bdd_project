@@ -8,7 +8,7 @@ Feature: Costs for (x) books
     Examples:
       | id        | answer |
       | 0,1       | 15.2   |
-      | 0,2,4     | 20.4   |
+      | 0,2,4     | 21.6   |
       | 0,1,2,4   | 25.6   |
       | 0,1,2,3,4 | 30     |
 

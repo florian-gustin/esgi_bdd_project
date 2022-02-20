@@ -1,11 +1,17 @@
 package esgi_bdd_project;
 
+import io.cucumber.java.Before;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import potter.Basket;
+import potter.Book;
+import potter.Books;
 import potter.Potter;
 
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -14,24 +20,34 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class Stepdefs {
 
     private List<Integer> nbs;
-    private float total;
+    private double total;
+    private static Basket basket;
+    private static Books books;
 
+
+    @Before
+    public void init() {
+        basket = new Basket();
+        books = new Books();
+    }
 
     @Given("my basket contains {string}")
     public void my_basket_contains(String string) {
+
+        books = new Books();
         nbs = explode(string);
     }
 
     @When("I compute the total price")
     public void i_compute_the_total_price() {
-
-        total = Potter.price(nbs);
+        BigDecimal bg = new BigDecimal(basket.estimate()).setScale(2, RoundingMode.HALF_UP);
+        total = bg.doubleValue();
     }
 
 
 
-    @Then("I should pay {float}")
-    public void i_should_pay(float int1) {
+    @Then("I should pay {double}")
+    public void i_should_pay(double int1) {
         assertEquals(int1, total);
     }
 
@@ -42,6 +58,10 @@ public class Stepdefs {
         String[] myArray = str.split(",");
         List<Integer> myList = new ArrayList<>();
         for (String s : myArray) {
+            Book book = new Book();
+            book.tome = Integer.parseInt(s);
+            books.add(book);
+            basket.addBook(book);
             myList.add(Integer.parseInt(s));
         }
         return myList;
