@@ -1,8 +1,8 @@
-Feature: Costs for (x) books
+Feature: Estimate the cost of a basket with several discounts
 
-  Scenario Outline: What is my total with several discounts ?
-    Given my basket contains "<id>"
-    When I compute the total price
+  Scenario Outline: Basket contains
+    Given the list of books "<id>"
+    When I compute the price
     Then I should pay <answer>
 
     Examples:

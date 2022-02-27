@@ -31,27 +31,21 @@ public class Stepdefs {
         books = new Books();
     }
 
-    @Given("my basket contains {string}")
-    public void my_basket_contains(String string) {
-
+    @Given("the list of books {string}")
+    public void the_list_of_books(String string) {
         books = new Books();
         nbs = explode(string);
     }
-
-    @When("I compute the total price")
-    public void i_compute_the_total_price() {
+    @When("I compute the price")
+    public void i_compute_the_price() {
         BigDecimal bg = new BigDecimal(basket.estimate()).setScale(2, RoundingMode.HALF_UP);
         total = bg.doubleValue();
     }
-
-
 
     @Then("I should pay {double}")
     public void i_should_pay(double int1) {
         assertEquals(int1, total);
     }
-
-
 
     static List<Integer> explode(String str) {
         if(str.isEmpty()) return new ArrayList<>();
