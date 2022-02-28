@@ -7,7 +7,6 @@ import io.cucumber.java.en.When;
 import potter.Basket;
 import potter.Book;
 import potter.Books;
-import potter.Potter;
 
 
 import java.math.BigDecimal;

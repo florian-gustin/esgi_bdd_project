@@ -1,7 +1,15 @@
-Tiens Cédric, travailles un peu :
+# Kata potter
 
-http://codingdojo.org/kata/Potter/
+https://www.youtube.com/watch?v=l0zi4KYdPOI
 
-y'a que quelques tests qui passent pas sinon c'est quasi fini !
+## Spec requirement
+* Java 11 (corretto if possible)
+* Maven
 
-![](https://tenor.com/view/get-to-work-work-simpsons-smithers-trendizisst-gif-15496843)
+## How to run
+
+```shell
+mvn test
+```
+
+AAAAND ![img.png](https://c.tenor.com/Dy5sAPoDT0QAAAAM/wow-wink.gif)

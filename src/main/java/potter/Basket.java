@@ -6,7 +6,6 @@ import java.util.List;
 public class Basket {
 
     List<Book> books = new ArrayList<>();
-    Discount discount = new Discount();
     private final int PRICE = 8;
 
     public void addBook(Book book) {
@@ -17,6 +16,7 @@ public class Basket {
         double total = 0;
         boolean specialCase5 = false; // special case of set of 5 and 3
 
+        // Stack book in collection (eg: 3x Tome 1)
         int[] count_book = {0,0,0,0,0};
 
         if(books.size() == 0)
@@ -71,6 +71,10 @@ public class Basket {
                     }
                 }
             }
+
+            /*
+            Pricing discount calcul
+             */
 
             if(sumOfBooks == 5 && sumOfNextBooks == 3) {
                 specialCase5 = true;
